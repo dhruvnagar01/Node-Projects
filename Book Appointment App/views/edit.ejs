@@ -1,0 +1,34 @@
+<%- include('./head.ejs') %>
+
+  <body>
+     
+    <div>
+        <% if(data && data.length > 0 ) { %> 
+        <h1  style="color: green; text-decoration: underline; " class="modal-header" style="padding:35px 50px;"> Update Appointment </h1>
+            <br><br>
+      <form id="myForm" action="/update-appointment" method="post">
+        <div style="width: auto;">
+          
+         <div> 
+            <input type="hidden" name="id" value="<%= data[0].id %>">
+        <label for="name"><span class="glyphicon glyphicon-user
+            "></span>Name</label>
+          <input class="form-group"  type="text" name="name" value="<%= data[0].name %>" required>
+       
+    
+        <label for="email"><span class="glyphicon glyphicon-user
+            "></span>Email</label>
+          <input class="form-group" type="email" name="email"  value="<%= data[0].email %>" required>
+    
+        <label for="phone"> <span class="glyphicon glyphicon-user
+            "></span>Mobile</label>
+          <input class="form-group" type="tel"  name="phone" value="<%= data[0].phone %>" minlength="10" maxlength="10" required>
+    </div>
+       <br>
+       <button type="submit" id="updateBtn" class="btn btn-success btn-block"><span class="glyphicon glyphicon-user"></span>Update</button>
+             
+       <% } else{ %>
+         <h1>No data</h1>
+         <% } %>
+</form>
+</div>

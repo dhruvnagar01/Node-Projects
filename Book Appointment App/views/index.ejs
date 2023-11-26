@@ -1,0 +1,163 @@
+<%- include('./head.ejs') %>
+
+  <body>
+  <div>
+    <form action="/search-appointment" method="post" style="padding-top: 10px;"> 
+      <div>    
+      <input type="search" name="name" placeholder="search by name">
+          <input type="search" name="email" placeholder="search by email">
+          <input type="search" name="phone" placeholder="search by phone">
+          <button type="submit">search</button>
+        </div>
+        <div>
+        </div>   
+        </div>
+    </form>
+
+    <div >
+    
+        <h1  style="color: green; text-decoration: underline; " class="modal-header" style="padding:35px 50px;"> Book Appointment </h1>
+
+
+
+      <form  id="myForm" action="/add-appointment" method="post">
+        <div style="width: auto;" >
+          
+         <div> 
+        <label for="name" ><span class="glyphicon glyphicon-user"></span>Name</label>
+          <input  class="form-group"  type="text" name="name" required>
+       
+    
+        <label for="email"><span class="glyphicon glyphicon-user"></span>Email</label>
+          <input class="form-group" type="email" name="email"  required>
+    
+        <label for="phone"><span class="glyphicon glyphicon-user"></span>Mobile</label>
+          <input class="form-group" type="tel"  name="phone" minlength="10" maxlength="10" required>
+    </div>
+       <br>
+
+        <button type="submit" id="submitBtn" class="btn btn-success "><span class="glyphicon glyphicon-user"></span>Submit</button>
+    
+</form>
+</div>
+    <% var localData = data %>
+      <!-- <%-data %> -->
+      <% if(data && data.length > 0 ) { %> 
+      <br><br><br>
+      <div >
+        <h1 align="center" style="color: yellowgreen; text-decoration: underline;">Appointment List</h1>
+        <table border="1px solid black"  style="width: 100%;">
+          <tr style="border: 2px;">
+            <th>S.No</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Phone No.</th>
+            <th>Action</th>
+          </tr>
+         
+            <% for(let i=0; i<data.length; i++) { %>
+            <tr  style="border: hidden; text-align: center;">  
+          
+            <td><%- data[i].id %></td>
+            <td><%- data[i].name %></td>
+            <td><%- data[i].email %></td>
+            <td><%- data[i].phone %></td>
+
+            <!-- <td><a onclick="handleEditClick(this);" ><button id =<%- data[i].id %> >Edit</button></a></td> -->
+            <td><a href="/edit-appointment?id=<%- data[i].id %>" ><button class="btn btn-default"><span class="glyphicon glyphicon-user"></span> Edit</button></a>
+
+            <a href="/delete-appointment?id=<%- data[i].id %>">  <button class="btn btn-danger " ><span class="glyphicon glyphicon-remove"></span>Delete</button></a></td>
+            </tr>
+          <% } %> 
+          
+          <% } else{ %>
+            <tr>
+                <td colspan="4"><h1>No Appointment!</h1></td>
+            </tr>
+            <% } %>
+        </table>
+      
+      </div>
+    </div>
+
+
+
+   
+    <!-- modal for update  -->
+    
+    <div class="container" >
+      
+        <!-- Trigger the modal with a button -->
+        
+        <% if(data && data.length > 0 ) { %> 
+
+          <div id="mydiv" data-test=<%= data %>></div>
+       
+        <!-- Modal -->
+        <div class="modal fade" id="myModal" role="dialog">
+          <div class="modal-dialog">
+          
+            <!-- Modal content-->
+            <div class="modal-content">
+              <div class="modal-header" style="padding:35px 50px;">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4><span class="glyphicon "></span> Update Appointment</h4>
+              </div>
+              <div class="modal-body" style="padding:40px 50px;">
+  
+                <form role="form" action="post">
+                  <div class="form-group">
+                    <label for="usrname"><span class="glyphicon glyphicon-user"></span> Name</label>
+                    <input type="text" class="form-control" id="name" >
+                  </div>
+                  <div class="form-group">
+                    <label for="email"><span class="glyphicon glyphicon-user"></span> Email</label>
+                    <input type="email" class="form-control" id="email" >
+                  </div>
+                  <div class="form-group">
+                      <label for="phone"><span class="glyphicon glyphicon-user
+                        "></span> Phone</label>
+                      <input type="text" class="form-control" id="phone" >
+                    </div>
+                  
+                    <button type="submit" class="btn btn-success btn-block"><span class="glyphicon glyphicon-user"></span> Update</button>
+                </form>
+              </div>
+              <div class="modal-footer">
+                <button type="submit" class="btn btn-danger btn-default pull-left" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Cancel</button>
+                
+                <% } %> 
+          
+  
+              </div>
+            </div>
+            
+          </div>
+        </div> 
+      </div>
+ 
+
+      <script>
+        
+        var dataa = '<%=data%>';
+        
+        function handleEditClick(element) {
+          console.log(dataa.length);
+          // console.log(JSON.parse(dataa));
+          for(let i =0; i< dataa.length; i++) {
+            console.log(dataa[0].name);
+          }
+          // Get the id attribute value of the clicked button
+          var buttonId = $(element).find('button').attr('id');
+          var user = dataa[buttonId].name;
+          // Send a request to the server with the buttonId
+          $.post('/handle-click', { user }, function(response) {
+            // Handle the server's response if needed
+            $("#myModal").modal();
+            
+          });
+           
+          }
+        </script>
+</body>
+</html>
