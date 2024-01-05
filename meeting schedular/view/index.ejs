@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <title>Schedule Meeting</title>
+  </head>
+  <body>
+    <div class="container m-3 d-flex">
+      <div class="me-4" id="outerdiv">
+        <% for(let i of meetData) { %>
+        <div
+          class="card m-3 slot text-center"
+          style="width: 18rem"
+          name="innerDiv"
+          id="<%= i.id %>"
+          onclick="displayForm(this.id, '<%=i.time %>')"
+        >
+          <div class="card-body">
+            <h3 class="card-title"><%= i.time %> PM</h3>
+            <h5 class="available"><%= i.slotsAvail %> Available</h5>
+          </div>
+        </div>
+        <% } %>
+      </div>
+      <div>
+        <div class="form" id="formDispaly" style="display: none">
+          <form action="/scheduleMeeting" method="post" id="userForm">
+            <div class="mb-3">
+              <input type="hidden" id="hidden-time" value="" name="time" />
+              <input type="hidden" id="hidden-Id" value="" name="meetId" />
+              <label for="name" class="form-label">Name</label>
+              <input
+                type="text"
+                class="form-control"
+                id="name"
+                name="username"
+                required
+              />
+            </div>
+            <div class="mb-3">
+              <label for="email" class="form-label">Email address</label>
+              <input
+                type="email"
+                class="form-control"
+                id="email"
+                name="useremail"
+                required
+              />
+            </div>
+
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- div to represent slots on page -->
+
+    <!-- div to represent scheduled meeting on page -->
+    <div>
+      <div class="row m-2">
+        <ins><h2 class="display-4 text-center">Scheduled Meeting</h2></ins>
+        <% if(data.length > 0) {%> <% for(let i of data) { %>
+        <div class="noteCard m-4" style="width: 18rem">
+          <div class="card" style="width: 18rem">
+            <div class="card-body">
+              <h2 class="card-title">Hi, <%= i.username %></h2>
+              <h6 class="card-subtitle mb-2 text-body-secondary">
+                <%= i.useremail %>
+              </h6>
+              <p class="card-text">
+                Please join the meeting by click the JOIN button OR cancel
+                meeting by click on Delete.
+              </p>
+              <a href="https://meet.google.com/nyq-fnwy-jcd" target="_blank"
+                ><button class="btn btn-success">Join</button></a
+              >
+
+              <a href="/scheduledMeeting/?id=<%= i.id %>"
+                ><button class="btn btn-danger">Delete</button></a
+              >
+            </div>
+          </div>
+        </div>
+        <%} } else {%>
+
+        <div class="card-body text-center mt-5">
+          <h3 class="card-title">No Meeting Scheduled</h3>
+          <h5 style="color: blue">
+            Schedule new meeting according to slot availability
+          </h5>
+        </div>
+        <%} %>
+      </div>
+    </div>
+
+    <script src="slotJS.js"></script>
+  </body>
+</html>

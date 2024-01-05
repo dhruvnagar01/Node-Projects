@@ -1,0 +1,68 @@
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 20px;
+}
+
+.slot{
+    cursor: pointer;
+    justify-content:space-around;
+}
+.cards {
+    border-radius: 10px;
+    padding: 10px;
+    font-size: 20px;
+    background-color: rgb(255, 253, 250);
+}
+.available{
+    color: green;
+}
+#meet-Schedule{
+    display: flex;
+    justify-content: space-between;
+}
+.meeting-Times {
+    border: 1px solid whitesmoke;
+    border-radius: 10px;
+    padding: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+
+}
+
+.meeting-Times:hover {
+    background-color: #f7f3f3;
+}
+#my-form {
+    display: flex;
+    justify-content: center;
+}
+#dropdown-container {
+    margin-top: 20px;
+}
+
+.noteCard {
+    background-color: white;
+}
+
+.card-title {
+    color: black;
+}
+
+.card-body {
+    background-color: whitesmoke;
+    color: black;
+}
+
+.btn {
+    cursor: pointer;
+    padding: 8px 16px;
+    border-radius: 5px;
+}
+
+.btn-primary {
+    background-color: #3498db;
+}
+
+.btn-danger {
+    background-color: #e74c3c;
+}
